@@ -5,7 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:   # 网页可手动触发
+  workflow_dispatch:   # 可以网页手动触发
 
 jobs:
   sonarqube:
@@ -20,7 +20,7 @@ jobs:
       - name: Run SonarScanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          PATH: /opt/sonar-scanner/bin:$PATH   # 保证 runner 能找到 sonar-scanner
+          PATH: /opt/sonar-scanner/bin:$PATH   # 确保 runner 找到 sonar-scanner
         run: |
           sonar-scanner \
             -Dsonar.projectKey=VideoSemanticCompressed \
