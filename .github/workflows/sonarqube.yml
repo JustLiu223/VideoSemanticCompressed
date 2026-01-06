@@ -1,6 +1,5 @@
 name: SonarQube Scan
 
-# 触发条件：push 到 main 分支、PR 或手动触发
 on:
   push:
     branches: [ main ]
@@ -13,25 +12,17 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      # 1️⃣ 拉取代码
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 2️⃣ 运行 SonarScanner CLI
       - name: Run SonarScanner
         shell: bash
         env:
-          # GitHub Secrets 中存储你的 SonarQube token
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          # 保证 runner 能找到本地 sonar-scanner
           PATH: /opt/sonar-scanner/bin:$PATH
         run: |
-          # 打印版本，验证 CLI 可用
-          sonar-scanner --version
-
-          # 执行分析
           sonar-scanner \
             -Dsonar.projectKey=VideoSemanticCompressed \
             -Dsonar.sources=. \
