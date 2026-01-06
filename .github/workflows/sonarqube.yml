@@ -1,28 +1,29 @@
-name: SonarQube Code Scan
+name: SonarQube Scan
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
+  workflow_dispatch:   # 网页可手动触发
 
 jobs:
   sonarqube:
-    name: SonarQube Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-      # Step 1: 拉取代码
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # 必须，保证分支/PR分析正确
+          fetch-depth: 0
 
-      # Step 2: 执行 SonarQube 扫描
-      - name: Run SonarQube Scanner
-        uses: SonarSource/sonarqube-scan-action@v2
+      - name: Run SonarScanner
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          PATH: /opt/sonar-scanner/bin:$PATH   # 保证 runner 能找到 sonar-scanner
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=VideoSemanticCompressed \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=http://192.168.220.128:9000 \
+            -Dsonar.login=$SONAR_TOKEN
