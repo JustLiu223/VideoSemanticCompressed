@@ -21,6 +21,7 @@ jobs:
 
       # 2️⃣ 运行 SonarScanner CLI
       - name: Run SonarScanner
+        shell: bash
         env:
           # GitHub Secrets 中存储你的 SonarQube token
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
