@@ -17,13 +17,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run SonarScanner
-        shell: bash
+      - name: Run SonarScanner Java
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          PATH: /opt/sonar-scanner/bin:$PATH
         run: |
-          sonar-scanner \
+          java -jar /opt/sonar-scanner/lib/sonar-scanner-cli-5.0.1.3006.jar \
             -Dsonar.projectKey=VideoSemanticCompressed \
             -Dsonar.sources=. \
             -Dsonar.host.url=http://192.168.220.128:9000 \
