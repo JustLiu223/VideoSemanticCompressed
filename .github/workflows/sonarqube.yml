@@ -11,7 +11,7 @@ on:
 jobs:
   sonarqube:
     name: SonarQube Scan
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       # Step 1: 拉取代码
